@@ -1,0 +1,23 @@
+{
+  "name": "server-side-javascript",
+  "version": "1.0.0",
+  "description": "study about node.js",
+  "main": "module.js",
+  "dependencies": {
+    "underscore": "^1.8.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sauber92/MyProject.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sauber92/MyProject/issues"
+  },
+  "homepage": "https://github.com/sauber92/MyProject#readme"
+}

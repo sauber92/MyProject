@@ -2,7 +2,29 @@ var express = require('express');
 var app = express();
 
 // public 이라는 디렉토리를 정적 서비스로 선언하겠다.
+// 정적으로 파일을 처리하면 요청이 들어올때마다 node가 그것을 잡아서 실행시켜준다.
+// 즉, node 서버를 재실행하지 않아도 곧장 반영이 된다.
 app.use(express.static('public'));
+
+// dynamic 디렉토리는 동적서비스로 사용하겠다.
+// 그러기 위해 output이라는 변수를 통해 html 코드를 집어넣었다.
+// 하지만 dynamic 을 실행하기 위해선 node 서버를 재실행해야 반영이 된다.
+// 이런 점에선 동적실행보단 정적실행이 웹페이지 작성엔 좋다.
+// 동적실행은, 반복적인 수행을 해야할 때 좋다.
+app.get('/dynamic', function(req, res) {
+  var output = `<!DOCTYPE html>
+  <html>
+    <head>
+      <meta charset="utf-8">
+      <title>Dynamic homepage</title>
+    </head>
+    <body>
+      <p>Hello Dynamic!</p>
+    </body>
+  </html>
+`;
+  res.send(output);
+});
 
 // 사용자가 웹에 접속하는 방식에는 get과 post가 있다.
 // 일반적으로 url을 통해 접속하는 방법은 get이다.

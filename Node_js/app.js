@@ -1,6 +1,9 @@
 var express = require('express');
 var app = express();
 
+// public 이라는 디렉토리를 정적 서비스로 선언하겠다.
+app.use(express.static('public'));
+
 // 사용자가 웹에 접속하는 방식에는 get과 post가 있다.
 // 일반적으로 url을 통해 접속하는 방법은 get이다.
 //

@@ -8,8 +8,11 @@ app.set('view engine', 'jade');
 // jade 템플릿이 들어갈 디렉토리 설정
 app.set('views', './views');
 
+// jade를 사용하는 템플릿 라우팅
 app.get('/template', function(req, res) {
-  res.render('temp');
+  // temp.jade를 렌더링
+  // temp.jade에서 사용될 time이라는 객체 선언
+  res.render('temp', {time:Date()});
 });
 
 // public 이라는 디렉토리를 정적 서비스로 선언하겠다.

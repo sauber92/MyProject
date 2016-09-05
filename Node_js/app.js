@@ -1,10 +1,16 @@
 var express = require('express');
 var app = express();
 
+// pretty한 코드(=정렬이 잘 되어있는)로 출력
+app.locals.pretty = true;
 // express와 jade 템플릿 연결
 app.set('view engine', 'jade');
 // jade 템플릿이 들어갈 디렉토리 설정
 app.set('views', './views');
+
+app.get('/template', function(req, res) {
+  res.render('temp');
+});
 
 // public 이라는 디렉토리를 정적 서비스로 선언하겠다.
 // 정적으로 파일을 처리하면 요청이 들어올때마다 node가 그것을 잡아서 실행시켜준다.

@@ -1,1 +1,2 @@
 Hello Static
+This is "hello.txt" file

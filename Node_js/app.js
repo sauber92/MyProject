@@ -6,7 +6,21 @@ app.locals.pretty = true;
 
 // query string
 app.get('/topic', function(req, res) {
-  res.send(req.query.id+','+req.query.name);
+  //res.send(req.query.id+','+req.query.name);
+  var topics = [
+    'Javascript is ...',
+    'Node.js is ...',
+    'Express is ...'
+  ];
+
+  var output = `
+      <a href="/topic?id=0">Javascript</a><br>
+      <a href="/topic?id=1">Node.js</a><br>
+      <a href="/topic?id=2">Express</a><br>
+      ${topics[req.query.id]}
+  `;
+
+  res.send(output);
 });
 
 // express와 jade 템플릿 연결

@@ -3,6 +3,12 @@ var app = express();
 
 // pretty한 코드(=정렬이 잘 되어있는)로 출력
 app.locals.pretty = true;
+
+// query string
+app.get('/topic', function(req, res) {
+  res.send(req.query.id+','+req.query.name);
+});
+
 // express와 jade 템플릿 연결
 app.set('view engine', 'jade');
 // jade 템플릿이 들어갈 디렉토리 설정

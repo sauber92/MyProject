@@ -4,6 +4,16 @@ var app = express();
 // pretty한 코드(=정렬이 잘 되어있는)로 출력
 app.locals.pretty = true;
 
+app.get('/form', function(req, res) {
+  res.render('form');
+});
+
+app.get('form_receiver', function(req, res) {
+  var title = req.query.title;
+  var description = req.query.description;
+  res.send(title+','+description);
+});
+
 // query string
 app.get('/topic/:id', function(req, res) {
   //res.send(req.query.id+','+req.query.name);

@@ -5,7 +5,7 @@ var app = express();
 app.locals.pretty = true;
 
 // query string
-app.get('/topic', function(req, res) {
+app.get('/topic/:id', function(req, res) {
   //res.send(req.query.id+','+req.query.name);
   var topics = [
     'Javascript is ...',
@@ -13,14 +13,19 @@ app.get('/topic', function(req, res) {
     'Express is ...'
   ];
 
+  // Semantic URL
   var output = `
       <a href="/topic?id=0">Javascript</a><br>
       <a href="/topic?id=1">Node.js</a><br>
       <a href="/topic?id=2">Express</a><br>
-      ${topics[req.query.id]}
+      ${topics[req.params.id]}
   `;
 
   res.send(output);
+});
+
+app.get('/topic/:id/:mode', function(req, res) {
+  res.send(req.params.id+','+req.params.mode);
 });
 
 // express와 jade 템플릿 연결

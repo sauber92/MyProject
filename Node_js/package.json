@@ -4,6 +4,7 @@
   "description": "study about node.js",
   "main": "module.js",
   "dependencies": {
+    "body-parser": "^1.15.2",
     "express": "^4.14.0",
     "jade": "^1.11.0",
     "underscore": "^1.8.3"

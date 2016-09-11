@@ -1,6 +1,13 @@
 var express = require('express');
 var app = express();
 
+// bodyParser 모듈 사용
+var bodyParser = require('body-parser')
+
+// 사용자가 POST 방식을 사용할 때,
+// POST를 사용할 수 있도록 도와주는 bodyParser
+app.use(bodyParser.urlencoded({ extended: false }));
+
 // pretty한 코드(=정렬이 잘 되어있는)로 출력
 app.locals.pretty = true;
 
@@ -8,9 +15,23 @@ app.get('/form', function(req, res) {
   res.render('form');
 });
 
-app.get('form_receiver', function(req, res) {
+// get 방식:
+// url 상에 입력한 모든 정보가 표시된다.
+// 쿼리스트링으로 정보를 전달할 수 있는 장점이 있다.
+app.get('/form_receiver', function(req, res) {
   var title = req.query.title;
   var description = req.query.description;
+  res.send(title+','+description);
+});
+
+// post 방식:
+// url 상에 입력한 정보가 표시 되지 않는다.
+// 즉, 로그인과 같은 보안을 요구하는 곳에 사용해야한다.
+// 물론 보안적으로 완전하지 못하다. 단순히 url 상에 표시가 안 되는 것
+// 또한, url이 너무 길어지면 제대로 정보 전달이 안될 수 있다.
+app.post('/form_receiver', function(req, res) {
+  var title = req.body.title;
+  var description = req.body.description;
   res.send(title+','+description);
 });
 

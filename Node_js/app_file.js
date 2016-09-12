@@ -14,7 +14,9 @@ var app = express();
 
 // post 방식 사용을 위한 bodyPaser 선언
 var bodyParser = require('body-parser');
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
 
 // file system 사용 선언
 var fs = require('fs');
@@ -26,47 +28,81 @@ app.locals.pretty = true;
 
 // app을 3000번 포트에 connect
 app.listen(3000, function() {
-  console.log('Connected, 3000 port!!!');
+    console.log('Connected, 3000 port!!!');
 });
 // 라우팅
 app.get('/topic/new', function(req, res) {
-  res.render('new');
-});
-app.get('/topic', function(req, res) {
-  fs.readdir('data', function(err, files) {
-    if(err) {
-      console.log(err);
-      res.status(500).send('Internal Server Error');
-    }
-    res.render('view', {topics:files});
-  });
-});
-app.post('/topic', function(req, res) {
-  var title = req.body.title;
-  var description = req.body.description;
-
-  fs.writeFile('data/'+title, description, function(err) {
-    if(err) {
-        console.log(err);
-        res.status(500).send('Internal Server Error');
-    }
-    res.send('Sucess!');
-  });
-});
-app.get('/topic/:id', function(req, res) {
-  var id = req.params.id;
-
-  fs.readdir('data', function(err, files) {
-    if(err) {
-      console.log(err);
-      res.status(500).send('Internal Server Error');
-    }
-    fs.readFile('data/'+id, 'utf8', function(err, data) {
-      if(err) {
-        console.log(err);
-        res.status(500).send('Internal Server Error');
-      }
-      res.render('view', {topics:files, title:id, description:data});
+    fs.readdir('data', function(err, files) {
+        if (err) {
+            console.log(err);
+            res.status(500).send('Internal Server Error');
+        }
+        res.render('new', {
+            topics: files
+        });
     });
-  });
+});
+app.get(['/topic', '/topic/:id'], function(req, res) {
+    var id = req.params.id;
+
+    fs.readdir('data', function(err, files) {
+        if (err) {
+            console.log(err);
+            res.status(500).send('Internal Server Error');
+        }
+        if (id) {
+            // id 값이 있을 때
+            fs.readFile('data/' + id, 'utf8', function(err, data) {
+                if (err) {
+                    console.log(err);
+                    res.status(500).send('Internal Server Error');
+                }
+                res.render('view', {
+                    topics: files,
+                    title: id,
+                    description: data
+                });
+            });
+        } else {
+            // id 값이 없을 때
+            res.render('view', {
+                topics: files,
+                title: 'Welcome',
+                description: 'Hello, JavaScript for server.'
+            });
+        }
+    });
+});
+// app.get('/topic/:id', function(req, res) {
+//     var id = req.params.id;
+//
+//     fs.readdir('data', function(err, files) {
+//         if (err) {
+//             console.log(err);
+//             res.status(500).send('Internal Server Error');
+//         }
+//         fs.readFile('data/' + id, 'utf8', function(err, data) {
+//             if (err) {
+//                 console.log(err);
+//                 res.status(500).send('Internal Server Error');
+//             }
+//             res.render('view', {
+//                 topics: files,
+//                 title: id,
+//                 description: data
+//             });
+//         });
+//     });
+// });
+app.post('/topic', function(req, res) {
+    var title = req.body.title;
+    var description = req.body.description;
+
+    fs.writeFile('data/' + title, description, function(err) {
+        if (err) {
+            console.log(err);
+            res.status(500).send('Internal Server Error');
+        }
+        res.redirect('/topic/' + title);
+    });
 });
